@@ -4,7 +4,7 @@ import { OrderService } from './order.service';
 import { CartItem } from 'app/restaurant-detail/shopping-cart/cart-item.model';
 import { Order, OrderItem } from './order.model';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThrowStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -40,21 +40,7 @@ export class OrderComponent implements OnInit {
       number:this.formBuilder.control('',  [Validators.required, Validators.pattern(this.numberPattern)]),
       optionalAddress: this.formBuilder.control(''),
       paymentOption: this.formBuilder.control('', Validators.required)
-    },{validator: OrderComponent.equalsTo})
-  }
-
-  static equalsTo(group: AbstractControl): {[key: string]:boolean} {
-    const email = group.get('email')
-    const emailConfirmation = group.get('emailConfirmation')
-    if(!email || !emailConfirmation){
-      return undefined
-    }
-
-    if(email.value != emailConfirmation.value){
-      return {emailsNotMatch:true}
-    }
-
-    return undefined
+    })
   }
 
   itemsValue(): number{
